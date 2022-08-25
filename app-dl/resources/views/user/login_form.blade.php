@@ -11,6 +11,33 @@
 <body>
   <form class="form-signin" method="POST" action="{{route('login')}}">
     @csrf
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+{{--     @if (session('login_error'))
+    <div class="alert alert-danger">
+      {{ session('login_error') }}
+    </div>
+    @endif --}}
+
+    <x-alert type="danger" ;session="session('login_error')"/>{{-- //コンポーネント呼び出し --}}
+
+{{--     @if (session('logout'))
+    <div class="alert alert-danger">
+      {{ session('logout') }}
+    </div>
+    @endif --}}
+
+    <x-alert type="success" ;session="session('logout')"/>{{-- //コンポーネント呼び出し --}}
+
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail" name="email" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
