@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\Auth\AuthController;//
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,16 @@ use App\Http\Controllers\BlogsController;
 |
 */
 
+
+//ログインの表示
+Route::get('/', [AuthController::class, 'showLogin'])->name('showLogin');
+//ログイン処理
+Route::post('/', [AuthController::class, 'login'])->name('login');
+
+
+
 //一覧画面を表示
-Route::get('/', [BlogsController::class, 'showList'])->name('blogs');
+Route::get('/list', [BlogsController::class, 'showList'])->name('blogs');
 
 //記事詳細を表示
 Route::get('/blog/{id}',//{id}は$idを入れれる
@@ -23,7 +32,6 @@ Route::get('/blog/{id}',//{id}は$idを入れれる
 
 //記事投稿フォーム表示
 Route::get('/blog', [BlogsController::class, 'showCreate'])->name('create');
-
 //記事登録
 Route::post('/blog', [BlogsController::class, 'exeStore'])->name('store');
 
