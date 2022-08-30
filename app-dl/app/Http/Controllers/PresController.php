@@ -53,8 +53,6 @@ class PresController extends Controller
      */
     public function showRegister()
     {   
-        //どうやってurlのtokenを取得するかという問題。。。
-        //$token = $_GET['token'];
         $token = request('token');
         $user = Pres::findByToken($token);
         $res = $this->isTimeOut($user);

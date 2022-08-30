@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogsController;
-use App\Http\Controllers\Auth\AuthController;//
+use App\Http\Controllers\AuthController;//
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PresController;
 
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['guest']], function () {//未　ログイン
 
     //register ー> form disp : register
     Route::get('/register/{token}' ,[PresController::class, 'showRegister'])->name('showRegister')->where('token','[A-Za-z0-9]+');
-    Route::post('/register',[AuthController::class, 'exeStore'])->name('storeRegister');
+    Route::post('register',[AuthController::class, 'exeStore'])->name('storeRegister');
     //'/register/?urltoken={token}'
 
     //login form ー> disp : login

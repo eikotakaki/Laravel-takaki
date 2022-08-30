@@ -12,7 +12,7 @@
 
   <div class="container w-50 m-5 p-5 border boder-primary ">
     <h5 class="text-primary mt-5 text-center">本登録</h5>
-    <form class="form-signin" method="POST" action="{{route('login')}}">
+    <form class="form-signin" method="POST" action="{{route('storeRegister')}}">
       @csrf
 
       @if ($errors->any())
@@ -41,6 +41,8 @@
 
       <x-alert type="success" ;session="session('logout')"/>{{-- //コンポーネント呼び出し --}}
 
+      <label for="inputEmail" class="sr-only mt-5">name</label>
+      <input type="text" id="inputEmail" name="name" class="form-control" placeholder="user name" required autofocus>
       <label for="inputEmail" name="email" class="sr-only mt-5">Email address</label>
       <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only mt-3">Password</label>

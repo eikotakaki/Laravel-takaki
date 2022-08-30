@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\LoginFormRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -17,22 +19,23 @@ class AuthController extends Controller
     /**
      * 本登録処理
      * register function
-     * @param LoginFormRequest App\Http\Requests $request
+     * @param RegisterRequest App\Http\Requests $request
      * @return void
      */
-    public function exeStore(LoginFormRequest $request)
+    public function exeStore(RegisterRequest $request)
     {
-        $inputs = $request->only('email','password','password_conf');
-        dd($inputs);
-
+        $inputs = $request->only('name','email','password');
+        $inputs['password'] = Hash::make($inputs['password']);
         DB::beginTransaction();
         try {
+            User::create($inputs);
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect(('/'))->route("blogs")->with(['err_msg' =>'本登録失敗']);
+            logger('test', [$e]);
+            return redirect()->route("showPre")->with(['err_msg' =>'本登録失敗']);
         }
-        return view('pre.register')->with(['err_msg' =>'本登録完了しました！ログインして利用開始']);
+        return view('user.login_form')->with(['err_msg' =>'本登録完了しました！ログインして利用開始']);
     }
 
     /**
