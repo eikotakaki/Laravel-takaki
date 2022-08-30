@@ -12,7 +12,7 @@
 
   <div class="container w-50 m-5 p-5 border boder-primary ">
     <h5 class="text-primary mt-5 text-center">仮登録</h5>
-    <form class="form-signin" method="POST" action="{{route('pre')}}">
+    <form class="form-signin" method="POST" action="{{route('storePre')}}">
       @csrf
 
       @if ($errors->any())

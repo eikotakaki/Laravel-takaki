@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Pres;
 use App\Mail\TestMail;
 use App\Http\Requests\PreRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\LoginFormRequest;
+use Illuminate\Support\Carbon;
+
 
 class PresController extends Controller
 {
-    public function __construct()
-    {
-        //$this->Pres = new Pres();
-    }
-
     /**
      * showPreform function
      * @return view('pre.form')
@@ -26,44 +23,50 @@ class PresController extends Controller
     }
 
     /**
-     * login function
+     * pre function
      * @param LoginFormRequest App\Http\Requests $request
      * @return void
      */
-    public function pre(PreRequest $request)
+    public function exeStore(PreRequest $request)
     {
-        $email = $request->only('email');
-        $token = sha1(uniqid(rand(),1));
-        $url   = "http://localhost:28001" . "?urltoken=" . $token ;
+        $attr = $request->only('email');
+        $attr['token'] = sha1(uniqid(rand(),1));
+        $url   = "http://localhost:28001/register/" . $attr['token']  ;
         echo $url;
-
-        $register = Pres::build($email,$token);
-        dd($register);//boolかデータが返ってくるはず
-/*         if(isset($get)){
-            Mail::to($get['email'])->send(new TestMail());
-            return redirect()->route("showTop")->with(['success' => '仮登録完了しました！届いたメールのURLから24時間以内に本登録に進んでください']);
-        } */
+        DB::beginTransaction();
+        try {
+            Pres::create($attr);
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            logger('test', [$e]);
+            return redirect()->route("showPre",)->with(['err_msg' =>'仮登録に失敗しました']);
+        } 
+        return view('pre.form')->with(['err_msg' =>'仮登録が完了しました！24時間以内にメールに添付されたURLから本登録を行ってください']);
+        //viewに表示するのまだ書いてない
     }
 
     /**
+     * トークンが有効期限内か確認
      * showregisterform function
      * @return view('pre.register')
      */
     public function showRegister()
-    {
-        return view('pre.register');
+    {   
+        //どうやってurlのtokenを取得するかという問題。。。
+        //$token = $_GET['token'];
+        $token = request('token');
+        $user = Pres::findByToken($token);
+        $res = $this->isTimeOut($user);
+        if ( !($res) ) {
+            return redirect()->route("showPre",)->with(['err_msg' =>'URLの有効期限が切れています']);
+        }
+        return view('pre.register')->with(['err_msg' =>'有効なURLです。本登録フォームを記入してください']);
     }
 
-        /**
-     * login function
-     * @param LoginFormRequest App\Http\Requests $request
-     * @return void
-     */
-    public function register(LoginFormRequest $request)
+    public function isTimeOut( $user )
     {
-        $get = $request->only('email');
-
+        return $user->updated_at->between(Carbon::now()->subHour(1), Carbon::now());
     }
-
 
 }

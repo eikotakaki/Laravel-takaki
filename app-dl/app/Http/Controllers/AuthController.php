@@ -2,23 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\BlogsController;//
-use App\Http\Controllers\Controller;//
+use App\Http\Controllers\BlogsController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Requests\LoginFormRequest;//
+use App\Http\Requests\LoginFormRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
 
-/*     public function __construct() {
-        $this->Blogs = new BlogsController;
+    /**
+     * 本登録処理
+     * register function
+     * @param LoginFormRequest App\Http\Requests $request
+     * @return void
+     */
+    public function exeStore(LoginFormRequest $request)
+    {
+        $inputs = $request->only('email','password','password_conf');
+        dd($inputs);
+
+        DB::beginTransaction();
+        try {
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect(('/'))->route("blogs")->with(['err_msg' =>'本登録失敗']);
+        }
+        return view('pre.register')->with(['err_msg' =>'本登録完了しました！ログインして利用開始']);
     }
-    protected $Blogs; */
 
     /**
      * showLogin function

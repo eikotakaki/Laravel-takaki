@@ -19,8 +19,6 @@ class CreatePresTable extends Migration
                 $table->string('email')->unique;
                 $table->string('token', 100);
                 $table->timestamps();
-                $table->dateTime('expiration_datetime')->comment('有効期限');
-
             });
         }
     }
