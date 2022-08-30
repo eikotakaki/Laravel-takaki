@@ -1,5 +1,3 @@
-
-
 @extends('./layouts/layout')
 @section('title', '編集フォーム')
 @section('content')
@@ -36,12 +34,12 @@
     </div>
 </div>
 <script>
-function checkSubmit(){
-if ( window.confirm('更新してよろしいですか？') ) {
-    return true;
-} else {
-    return false;
-}
-}
+    function checkSubmit(){
+        if ( window.confirm('更新してよろしいですか？') ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
 @endsection

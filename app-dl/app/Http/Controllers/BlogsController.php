@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Models\Blog;
+use App\Models\Blog;
 use App\Http\Requests\BlogRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +45,7 @@ class BlogsController extends Controller
      */
     public function exeStore( BlogRequest $request ){//バリデーション挟んでくれる
         $inputs = $request->all();
-        DB::beginTransaction();//DBの文字がエラー
+        DB::beginTransaction();
         try {
             Blog::create($inputs);
             DB::commit();
@@ -102,8 +101,9 @@ class BlogsController extends Controller
      * @return view
      */
     public function exeDelete( /* Blog $b, */ BlogRequest $request ){
+        dd('softDeletes作成中');
         //$inputs = $request->only('_token','id','deleted_at');
-        try {
+/*         try {
             $blog = Blog::find($inputs['id']);
             $blog->fill([
                 'title' => $inputs['deleted_at'],
@@ -113,7 +113,7 @@ class BlogsController extends Controller
             abort(500);
         }
         return redirect()->route("blogs")->with(['err_msg' => '記事を削除をしました']);
-
+ */
     } 
 
 }

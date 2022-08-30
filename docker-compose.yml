@@ -9,6 +9,11 @@ services:
       - ./docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./log:/var/log
 
+  mail: 
+    image: mailhog/mailhog    
+    ports: 
+    - 8025:8025
+
   web-dl:
     container_name: nginx-dl
     image: nginx

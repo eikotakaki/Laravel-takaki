@@ -9,42 +9,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-  <form class="form-signin" method="POST" action="{{route('login')}}">
-    @csrf
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+  <div class="container w-50 m-5 p-5 border boder-primary ">
+    <h5 class="text-primary mt-5 text-center">ログイン</h5>
+    <form class="form-signin" method="POST" action="{{route('login')}}">
+      @csrf
 
-{{--     @if (session('login_error'))
-    <div class="alert alert-danger">
-      {{ session('login_error') }}
-    </div>
-    @endif --}}
+      @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+      @endif
 
-    <x-alert type="danger" ;session="session('login_error')"/>{{-- //コンポーネント呼び出し --}}
+  {{--     @if (session('login_error'))
+      <div class="alert alert-danger">
+        {{ session('login_error') }}
+      </div>
+      @endif --}}
 
-{{--     @if (session('logout'))
-    <div class="alert alert-danger">
-      {{ session('logout') }}
-    </div>
-    @endif --}}
+      <x-alert type="danger" ;session="session('login_error')"/>{{-- //コンポーネント呼び出し --}}
 
-    <x-alert type="success" ;session="session('logout')"/>{{-- //コンポーネント呼び出し --}}
+  {{--     @if (session('logout'))
+      <div class="alert alert-danger">
+        {{ session('logout') }}
+      </div>
+      @endif --}}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" name="email" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  </form>  
+      <x-alert type="success" ;session="session('logout')"/>{{-- //コンポーネント呼び出し --}}
+
+      <label for="inputEmail" name="email" class="sr-only mt-5">Email address</label>
+      <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputPassword" class="sr-only mt-3">Password</label>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <div class="text-center">
+        <button class="mt-5 btn btn-lg btn-primary btn-block " type="submit">Sign in</button>
+      </div>
+    </form>  
+  </div>
 </body>
 </html>
 

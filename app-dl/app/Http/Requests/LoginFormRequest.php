@@ -11,9 +11,9 @@ class LoginFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()//権限とか
+    public function authorize()
     {
-        return true;
+        return true;//
     }
 
     /**
@@ -25,7 +25,7 @@ class LoginFormRequest extends FormRequest
     {
         return [
             'email' => 'required|max:255',
-            'password' => 'required',
+            'password' => 'required'
         ];
     }
 }

@@ -36,11 +36,11 @@
 </div>
 <script>
 function checkSubmit(){
-if ( window.confirm('送信してよろしいですか？') ) {
-    return true;
-} else {
-    return false;
-}
+    if ( window.confirm('送信してよろしいですか？') ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 </script>
 @endsection
